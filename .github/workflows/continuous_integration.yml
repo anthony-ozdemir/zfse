@@ -4,10 +4,10 @@ name: "continuous integration"
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   test:
@@ -22,8 +22,10 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
 
-    - name: Run Lint
-      run: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint@latest && make lint
+    - name: Set up golanci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
 
     - name: Run Tests
       run: make test
