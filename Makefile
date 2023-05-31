@@ -24,9 +24,9 @@ build:
 	go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME} ./cmd/main.go
 
 release:
-	GOARCH=amd64 GOOS=linux go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME} ./cmd/main.go
-	GOARCH=amd64 GOOS=windows go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME}-win.exe ./cmd/main.go
-	GOARCH=amd64 GOOS=darwin go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME}-darwin ./cmd/main.go
+	GOARCH=amd64 GOOS=linux go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME}-linux-amd64 ./cmd/main.go
+	GOARCH=amd64 GOOS=windows go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME}-windows-amd64 ./cmd/main.go
+	GOARCH=amd64 GOOS=darwin go build -o ${BUILD_OUTPUT_PREFIX_DIR}${BUILD_OUTPUT_BASE_NAME}-darwin-amd64 ./cmd/main.go
 
 clean:
 ifeq ($(OS),Windows_NT)
