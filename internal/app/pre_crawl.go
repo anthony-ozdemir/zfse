@@ -59,6 +59,7 @@ func (a *Application) runPreCrawlFilters(wg *sync.WaitGroup) {
 		taskState := a.db.GetPreCrawlFilterTaskState(zoneName)
 		if taskState.BIsFinished {
 			// We can skip this zone name
+			bHasAppendedToFileOnce = true
 			processedWorkItems += totalLinesMap[zoneName]
 			a.applicationStateManager.SetProcessedWorkItems(processedWorkItems)
 			continue

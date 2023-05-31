@@ -76,6 +76,10 @@ func (a *Application) runPostCrawlFilters(wg *sync.WaitGroup) {
 		// Check the state of pre-crawl
 		taskState := a.db.GetPostCrawlFilterTaskState(zoneName)
 		if taskState.BIsFinished {
+			appendedToFileMutex.Lock()
+			bHasAppendedToFileOnce = true
+			appendedToFileMutex.Unlock()
+
 			processedWorkItemsMutex.Lock()
 			defer processedWorkItemsMutex.Unlock()
 			processedWorkItems += totalLinesMap[zoneName]
