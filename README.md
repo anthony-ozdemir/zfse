@@ -1,5 +1,9 @@
 # **ZFSE** -- (Zone File Search Engine)
 
+[![continuous integration](https://github.com/anthony-ozdemir/zfse/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/anthony-ozdemir/zfse/actions/workflows/continuous_integration.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/anthony-ozdemir/zfse)](https://goreportcard.com/report/github.com/anthony-ozdemir/zfse)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Personalized Search, Infinite Exploration**
 
 ZFSE is a single binary independent search engine that can be self-hosted on the cheapest & most budget friendly
