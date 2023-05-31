@@ -16,7 +16,7 @@ func CreateFolder(dirPath string) error {
 	_, err := os.Stat(dirPath)
 
 	if os.IsNotExist(err) {
-		err = os.MkdirAll(dirPath, 0660)
+		err = os.MkdirAll(dirPath, 0700)
 		if err != nil {
 			return err
 		}
