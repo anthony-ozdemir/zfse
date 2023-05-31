@@ -1,0 +1,52 @@
+# .github/workflows/release.yml
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.18
+
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up golanci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+
+    - name: Run Tests
+      run: make test
+
+    - name: Build release
+      run: make release
+
+    - name: Set version
+      run: echo "NUMERIC_VERSION=$(echo ${GITHUB_REF#refs/*/v})" >> $GITHUB_ENV
+
+    - name: Rename files
+      run: |
+        mv build/zfse-linux-amd64 build/zfse-${{ env.NUMERIC_VERSION }}-linux-amd64
+        mv build/zfse-windows-amd64.exe build/zfse-${{ env.NUMERIC_VERSION }}-windows-amd64.exe
+        mv build/zfse-darwin-amd64 build/zfse-${{ env.NUMERIC_VERSION }}-darwin-amd64
+
+    - name: Upload Release
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: true
+        name: v${{ env.NUMERIC_VERSION }}
+        files: |
+          build/zfse-${{ env.NUMERIC_VERSION }}-linux-amd64
+          build/zfse-${{ env.NUMERIC_VERSION }}-windows-amd64.exe
+          build/zfse-${{ env.NUMERIC_VERSION }}-darwin-amd64
+      env:
+        GITHUB_TOKEN: ${{ secrets.ACTION_GH_RELEASE_SECRET }}
