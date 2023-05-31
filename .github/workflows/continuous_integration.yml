@@ -1,0 +1,32 @@
+# .github/workflows/continuous_integration.yml
+name: "continuous integration"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.18
+
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Run Lint
+      run: go get -u github.com/golangci/golangci-lint/cmd/golangci-lint@latest && make lint
+
+    - name: Run Tests
+      run: make test
+
+    - name: Build for all OS
+      run: make release

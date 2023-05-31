@@ -1,0 +1,58 @@
+linters-settings:
+  errcheck:
+    ignoretests: true
+  gofmt:
+    simplify: false
+  lll:
+    line-length: 120
+    tab-width: 4
+
+linters:
+  disable-all: true
+  enable:
+    - asasalint
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - dogsled
+    - dupl
+    - dupword
+    - errcheck
+    - errname
+    - godot
+    - gofmt
+    - gosec
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - prealloc
+    - staticcheck
+    - typecheck
+    - unused
+
+run:
+  deadline: 15m
+  tests: false
+
+output:
+  format: 'colored-line-number'
+  print-issued-lines: true
+  print-linter-name: true
+
+issues:
+  exclude-rules:
+    # errcheck G107
+    # G107: Potential HTTP request made with variable url
+    # Crawler is expected to call multiple variable URLs
+    - text: "G107"
+      linters:
+        - gosec
+
+    # gosec G404
+    # G404: Use of weak random number generator (math/rand instead of crypto/rand)
+    # We will manually check this. Strong RNG is only needed for security contexts.
+    - text: "G404"
+      linters:
+        - gosec

@@ -1,0 +1,56 @@
+[General]
+version = "1.0"
+# Logging
+log_file = true
+log_console = true
+metric_output_per_seconds = 30
+# Server Options
+listen_addr = "127.0.0.1"
+listen_port = "8080"
+# Multi-Threading
+num_thread_hint = 4
+# File Output Options
+file_bulk_output_qty = 10000 # Limit by RAM & disk I/O
+# Crawler Options
+connection_protocol = "https" # or http
+request_timeout_in_seconds = 5
+min_content_length_in_bytes = 128
+max_content_length_in_bytes = 409600
+content_read_limit_in_bytes = 4096 # Limit by bandwidth & memory
+concurrent_connections = 512 # Limit by RAM & CPU
+# Indexer Options
+indexer_output_limit = 500 # Limit by RAM
+
+# TASK HANDLERS
+[[PreCrawlFilters]]
+type="builtin.unique_domain"
+b_nameserver_check = true
+b_discard_properties = true
+
+[[PreCrawlFilters]]
+type="builtin.length_filter"
+min_length = 0
+max_length = 14
+
+#[[PreCrawlFilters]]
+#type="builtin.entropy_check"
+#discard_ratio = 0.6
+
+#[[PreCrawlFilters]]
+#type = "builtin.url_regex"
+#url_regex = "*"
+
+[[PostCrawlFilters]]
+type = "builtin.description_filter"
+description_regex = "(.*?)"
+
+[Indexer]
+type = "builtin.basic_indexer"
+
+[[Rankers]]
+type = "builtin.indexer_ranker"
+weight = 1.0
+
+#[[Rankers]]
+#type = "builtin.random_ranker"
+#weight = 1.0
