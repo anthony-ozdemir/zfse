@@ -15,12 +15,17 @@ type BasicIndexer struct {
 }
 
 func (b *BasicIndexer) Initialize(config config.TaskHandlerOptions, baseFolder string, outputLimit int64) error {
-	// Configure default indexing mapping
-	indexMapping := bleve.NewIndexMapping()
-	index, err := bleve.New(baseFolder, indexMapping)
 
+	// Try to open an existing index
+	index, err := bleve.Open(baseFolder)
+
+	// If the index doesn't exist, create a new one
 	if err != nil {
-		return err
+		indexMapping := bleve.NewIndexMapping()
+		index, err = bleve.New(baseFolder, indexMapping)
+		if err != nil {
+			return err
+		}
 	}
 
 	b.index = index
